@@ -7,33 +7,104 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      clicked: true,
       people: contacts.slice(0, 5)
     };
   }
+
+  addRandomContact = () => {
+    const uniqueContacts = contacts.filter(
+      (contact) => !this.state.people.includes(contact)
+    );
+    const person =
+      uniqueContacts[Math.floor(Math.random() * uniqueContacts.length)];
+    const people = [...this.state.people];
+    people.push(person);
+    this.setState({
+      clicked: this.state.clicked,
+      people: people
+    });
+  };
+
+  sortByName = () => {
+    const people = this.state.people;
+    const sortedPeople = [...people];
+    sortedPeople.sort((a, b) => (a.name > b.name ? 1 : -1));
+    this.setState({
+      clicked: this.state.clicked,
+      people: sortedPeople
+    });
+  };
+
+  sortByPopularity = () => {
+    const people = this.state.people;
+    const sortedPeople = [...people];
+    sortedPeople.sort((a, b) => b.popularity - a.popularity);
+    this.setState({
+      clicked: this.state.clicked,
+      people: sortedPeople
+    });
+  };
+
+  deleteFunction = () => {
+    const people = this.state.people;
+    const indexCelebrity = people.findIndex(
+      function (person, index, array) {
+        return person.name === people.name;
+        // function (value, index, ) {
+        //   return value.name === this.value.name;
+      }
+      // (person) => this.state.people.name === person.name
+    );
+    console.log(indexCelebrity);
+    people.splice(indexCelebrity, 1);
+    //const newArray = [...people];
+    this.setState({
+      clicked: this.state.clicked,
+      people: people
+    });
+  };
+
+  // deleteFunction = () => {
+  //   const people = this.state.people;
+  //   people.findIndex(function (name, index) {
+  //     return people.index.delete;
+  //   });
+  //   this.setState({
+  //     clicked: this.state.clicked,
+  //     people: people
+  //   });
+  // };
 
   render() {
     return (
       <div className="App">
         <h2>IronContacts</h2>
-        <table>
+        <button onClick={this.addRandomContact}>Add Random Contact</button>
+        <button onClick={this.sortByName}>Sort by Name</button>
+        <button onClick={this.sortByPopularity}>Sort By Popularity</button>
+        <table className="tablestyling">
           <tr>
             <th>Picture</th>
             <th>Name</th>
             <th>Popularity</th>
+            <th>Action</th>
           </tr>
+          {/* </table> */}
+          {/* <tr> */}
+          {this.state.people.map((person) => {
+            return (
+              <tr key={person.id}>
+                <td>
+                  <img className="imgstyle" src={person.pictureUrl}></img>
+                  {person.name}
+                  {person.popularity}
+                  <button onClick={this.deleteFunction}>Delete</button>
+                </td>
+              </tr>
+            );
+          })}
         </table>
-        {/* <tr> */}
-        {this.state.people.map((person) => {
-          return (
-            <tr key={person.id}>
-              <td>
-                <img className="imgstyle" src={person.pictureUrl}></img>
-                {person.name}
-                {person.popularity}
-              </td>
-            </tr>
-          );
-        })}
         {/* </tr> */}
       </div>
     );
