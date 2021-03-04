@@ -49,8 +49,8 @@ class App extends React.Component {
   deleteFunction = () => {
     const people = this.state.people;
     const indexCelebrity = people.findIndex(
-      function (person, index, array) {
-        return person.name === people.name;
+      function (id, index, people) {
+        return id === people.id;
         // function (value, index, ) {
         //   return value.name === this.value.name;
       }
@@ -84,26 +84,29 @@ class App extends React.Component {
         <button onClick={this.sortByName}>Sort by Name</button>
         <button onClick={this.sortByPopularity}>Sort By Popularity</button>
         <table className="tablestyling">
-          <tr>
-            <th>Picture</th>
-            <th>Name</th>
-            <th>Popularity</th>
-            <th>Action</th>
-          </tr>
-          {/* </table> */}
-          {/* <tr> */}
-          {this.state.people.map((person) => {
-            return (
-              <tr key={person.id}>
-                <td>
-                  <img className="imgstyle" src={person.pictureUrl}></img>
-                  {person.name}
-                  {person.popularity}
-                  <button onClick={this.deleteFunction}>Delete</button>
-                </td>
-              </tr>
-            );
-          })}
+          <tbody>
+            <tr>
+              <th>Picture</th>
+              <th>Name</th>
+              <th>Popularity</th>
+              <th>Action</th>
+            </tr>
+            {/* </table> */}
+            {/* <tr> */}
+            {this.state.people.map((person) => {
+              return (
+                <tr key={person.id}>
+                  <td>
+                    <img className="imgstyle" src={person.pictureUrl}></img>
+                    {person.name}
+                    {person.popularity}
+
+                    <button onClick={this.deleteFunction}>Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
         {/* </tr> */}
       </div>
