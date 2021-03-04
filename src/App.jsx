@@ -49,8 +49,9 @@ class App extends React.Component {
   deleteFunction = () => {
     const people = this.state.people;
     const indexCelebrity = people.findIndex(
-      function (id, index, people) {
-        return id === people.id;
+      function (value, index, people) {
+        return (index = people[index]);
+        // return value.id === people.id;
         // function (value, index, ) {
         //   return value.name === this.value.name;
       }
